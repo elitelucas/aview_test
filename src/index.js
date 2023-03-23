@@ -36,7 +36,7 @@ import "assets/scss/argon-dashboard-pro-react.scss?v1.2.0";
 import AdminLayout from "layouts/Admin.js";
 // import RTLLayout from "layouts/RTL.js";
 import AuthLayout from "layouts/Auth.js";
-import IndexView from "views/Index.js";
+import PrivateRoute from 'components/routing/PrivateRoute.js';
 
 import { AuthProvider } from '../src/store/auth'
 import { FetchProvider } from '../src/store/fetch'
@@ -47,10 +47,9 @@ ReactDOM.render(
       <FetchProvider>
         <Switch>
           <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-          {/* <Route path="/rtl" render={(props) => <RTLLayout {...props} />} /> */}
-          {/* <Route path="/auth" render={(props) => <AuthLayout {...props} />} /> */}
-          <Route path="/" render={(props) => <AuthLayout {...props} />} />
-          {/* <Redirect from="*" to="/auth" /> */}
+          <PrivateRoute>
+            <Route path="/" render={(props) => <AuthLayout {...props} />} />
+          </PrivateRoute>
         </Switch>
       </FetchProvider>
     </AuthProvider>
