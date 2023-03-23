@@ -24,11 +24,7 @@ import SingleLoadingFail from "views/pages/examples/SLFail.js";
 
 import { publicFetch } from '../../../util/fetcher.js';
 import { AuthContext } from '../../../store/auth.js';
-import Auth from "layouts/Auth.js";
 import { NETWORK_PROVIDERS, PRODUCT_TYPE } from "util/config.js";
-
-var response = {};
-// const SLContext = createContext();
 
 function SingleLoading() {
     const { authState } = useContext(AuthContext);
@@ -37,44 +33,60 @@ function SingleLoading() {
     const user_id = authState.userInfo?.id;
 
     const [formData, setFormData] = useState({
-        loadFor: "",
+        loadFor: "Myself",
         networkProvider: "",
         type: "",
         product_id: "",
         mobileNumber: "08312346578",
     });
+    const mobileNumbers = {
+        'Myself': '0830012345',
+        '0740034141': '0740034141',
+        '0840000000': '0840000000',
+        '0900023826': '0900023826',
+        '0830012300': '0830012300',
+        '0830012345': '0830012345',
+        '0850012300': '0850012300',
+        '0850012345': '0850012345',
+        '0850200005': '0850200005',
+        '0820012300': '0820012300',
+        '0820012301': '0820012301',
+        '0820012345': '0820012345',
+        'WrongNumberExample': '0820012312123',
+    }
+    const [response, setResponse] = useState({ mobileNumber: 'testing....' });
 
-    const [showing, setShowing] = useState("main");
+    const [showing, setShowing] = useState("main"); //main, success, fail
     const [errStatus, setErrStatus] = useState("");
+
+    useEffect(() => {
+        let mobileNumber = mobileNumbers[formData.loadFor]
+        console.log(mobileNumber)
+        setFormData({ ...formData, mobileNumber: mobileNumber })
+    }, [formData.loadFor])
+
 
     const onChangeInput = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
+    const onSubmit = async () => {
         try {
-            const { data } = await publicFetch.post('/single-loading/transaction', { user_id, data: formData });
-            console.log(data);
-            response = data;
-            // localStorage.setItem('SLResponse', JSON.stringify(data));
-            if (data.status == 200) {
-                console.log("Status 200, Showing success page");
-                // return <Link to="/auth/single-loading-success"></Link>
-                // history.push("/auth/single-loading-success");
+            // const { data } = await publicFetch.post('/single-loading/transaction', { user_id, data: formData });
+            const { data } = await publicFetch.post('/bltelecoms/bundle/sales', { mobilenumber: formData.mobileNumber });
+
+            if (data.result) {
+                setResponse(data.data)
                 setShowing("success");
             } else {
-                console.log("Status 500, Showing fail page");
-                // return <Redirect to="/auth/single-loading-fail"></Redirect>
-                // history.push("/auth/single-loading-fail");
+                setResponse(data.message)
                 setShowing("fail");
             }
         } catch (error) {
-            let errorMessage = error.response.data.message;
-            errorMessage ? setErrStatus(JSON.parse(JSON.stringify(errorMessage))) : setErrStatus('');
-            console.log('error =>', JSON.stringify(errorMessage), 'errStatus =>', errStatus);
+            console.log('error =>', error.message);
+            setResponse(error.message)
+            setShowing("fail");
         }
-
     };
 
     const [products, setProducts] = useState([]);
@@ -117,11 +129,9 @@ function SingleLoading() {
                                         </Label>
                                         <Col md="9">
                                             <Input id="exampleFormControlSelect1" type="select" placeholder="Select Mobile Number" name="loadFor" value={formData.loadFor} onChange={(e) => onChangeInput(e)}>
-                                                <option >083 1234567</option>
-                                                <option>083 11111111</option>
-                                                <option>083 2222222</option>
-                                                <option>083 3333333</option>
-                                                <option>083 4444444</option>
+                                                {
+                                                    Object.keys(mobileNumbers).map((key, index) => <option value={key} key={index}>{key}</option>)
+                                                }
                                             </Input>
                                         </Col>
                                     </FormGroup>
@@ -139,7 +149,7 @@ function SingleLoading() {
                                             <Input id="exampleFormControlSelect2" type="select" placeholder="Select Network" name="networkProvider" onChange={(e) => onChangeInput(e)}>
                                                 <option>---</option>
                                                 {NETWORK_PROVIDERS.map((item, index) => <>
-                                                    <option value={item.id}>{item.name}</option>
+                                                    <option value={item.id} key={index}>{item.name}</option>
                                                 </>)}
                                             </Input>
                                         </Col>
@@ -158,7 +168,7 @@ function SingleLoading() {
                                             <Input id="exampleFormControlSelect3" type="select" name="type" value={formData.type} onChange={(e) => onChangeInput(e)}>
                                                 <option>---</option>
                                                 {PRODUCT_TYPE.map((item, index) => <>
-                                                    <option value={item.id}>{item.name}</option>
+                                                    <option value={item.id} key={index}>{item.name}</option>
                                                 </>)}
                                             </Input>
                                         </Col>
@@ -177,7 +187,7 @@ function SingleLoading() {
                                             <Input id="exampleFormControlSelect4" type="select" name="product_id" onChange={(e) => onChangeInput(e)}>
                                                 <option>---</option>
                                                 {products.filter((item) => item.vendorId == formData.networkProvider && item.category == formData.type).map((item, index) => <>
-                                                    <option value={item.id}>{item.name}</option>
+                                                    <option value={item.id} key={index}>{item.name}</option>
                                                 </>)}
                                             </Input>
                                         </Col>
@@ -216,6 +226,7 @@ function SingleLoading() {
                                                 name="mobileNumber"
                                                 value={formData.mobileNumber}
                                                 onChange={(e) => onChangeInput(e)}
+                                                readOnly
                                             />
                                         </Col>
                                     </FormGroup>
@@ -228,7 +239,7 @@ function SingleLoading() {
                         <Button
                             className=" my-2 mr-4"
                             color="primary"
-                            onClick={(e) => onSubmit(e)}
+                            onClick={onSubmit}
                         >
                             Submit
                         </Button>
