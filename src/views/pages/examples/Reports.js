@@ -27,30 +27,11 @@ import {
 } from "reactstrap";
 // core components
 import MenuHeader from "components/Headers/MenuHeader.js";
+import { publicFetch } from '../../../util/fetcher.js';
 
-// import styled from '@emotion/styled';
-// import styled from "styled-components";
-//our Wrapper that will go around FullCalendar
-// export const StyleWrapper = styled.div`
-//     .fc-event {
-//         width: 98px !important;
-//     }
-// `;
 
 function Reports() {
-    // const widgetCalendarRef = React.useRef(null);
-    // React.useEffect(() => {
-    //     let calendar = new Calendar(widgetCalendarRef.current, {
-    //         plugins: [dayGridPlugin],
-    //         initialView: "dayGridMonth",
-    //         // selectable: true,
-    //         // editable: true,
-    //         // events: widgetEvents,
-    //         headerToolbar: "",
-    //         height: "550px"
-    //     });
-    //     calendar.render();
-    // }, []);
+
     const [state, setState] = useState([
         {
             startDate: new Date(),
@@ -58,6 +39,21 @@ function Reports() {
             key: 'selection'
         }
     ]);
+
+    const generateReport = async () => {
+        console.log(state[0].startDate)
+        console.log(state[0].endDate)
+
+        const { data } = await publicFetch.post('/report/generate', {
+            startDate: state[0].startDate,
+            endDate: state[0].endDate,
+        });
+        if (data.result) {
+            window.open(`${process.env.REACT_APP_BACKEND_URL}/${data.data}`, '_blank');
+        } else {
+            console.log("Status 500, Showing fail page");
+        }
+    }
     return (
         <>
             <MenuHeader
@@ -111,22 +107,29 @@ function Reports() {
                     <Col lg="9">
                         {/* <Card className=" shadow border-0">
                             <CardBody > */}
-                                {/* <div ref={widgetCalendarRef} /> */}
-                                <DateRangePicker
-                                    onChange={item => setState([item.selection])}
-                                    showSelectionPreview={true}
-                                    moveRangeOnFirstSelection={false}
-                                    months={2}
-                                    ranges={state}
-                                    direction="horizontal"
-                                    style={{ width: '300px' }}
-                                />;
-                            {/* </CardBody>
+                        {/* <div ref={widgetCalendarRef} /> */}
+                        <DateRangePicker
+                            onChange={item => setState([item.selection])}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            months={2}
+                            ranges={state}
+                            direction="horizontal"
+                            style={{ width: '300px' }}
+                        />;
+                        {/* </CardBody>
                         </Card> */}
                     </Col>
                 </Row>
             </Container>
             <Container className="text-center pb-5">
+                <Button
+                    className=" my-2 mr-4"
+                    color="primary"
+                    onClick={generateReport}
+                >
+                    Generate Report
+                </Button>
                 <Button
                     className="btn-neutral my-2"
                     color="default"

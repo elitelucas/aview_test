@@ -27,8 +27,7 @@ import { AuthContext } from '../../../store/auth.js';
 import { NETWORK_PROVIDERS, PRODUCT_TYPE } from "util/config.js";
 
 function SingleLoading() {
-    const { authState } = useContext(AuthContext);
-    const { logout } = useContext(AuthContext);
+    const { authState, logout } = useContext(AuthContext);
     const username = authState.userInfo?.username;
     const user_id = authState.userInfo?.id;
 
@@ -73,7 +72,8 @@ function SingleLoading() {
     const onSubmit = async () => {
         try {
             // const { data } = await publicFetch.post('/single-loading/transaction', { user_id, data: formData });
-            const { data } = await publicFetch.post('/bltelecoms/bundle/sales', { mobilenumber: formData.mobileNumber });
+            // const { data } = await publicFetch.post('/bltelecoms/bundle/sales', { mobilenumber: formData.mobileNumber });
+            const { data } = await publicFetch.post('/single-loading/transaction', { mobilenumber: formData.mobileNumber, user_id });
 
             if (data.result) {
                 setResponse(data.data)
@@ -117,7 +117,7 @@ function SingleLoading() {
                     <Container className="text-center pb-4 px-2 px-lg-8" style={{ marginTop: '-10rem' }}>
                         <Card className="card-pricing bg-gradient-success zoom-in shadow-lg rounded border-0 text-center mb-4 mx-4">
                             <CardBody className="px-lg-6 pb-2">
-                                <span>{JSON.stringify(formData)}</span>
+                                {/* <span>{JSON.stringify(formData)}</span> */}
                                 <Form>
                                     <FormGroup className="row">
                                         <Label

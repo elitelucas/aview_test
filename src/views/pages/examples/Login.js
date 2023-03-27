@@ -107,8 +107,8 @@ function Login() {
         lead="Use these awesome forms to login or create new account in your project for free."
       /> */}
       <AuthHeader
-        title="App Name"
-        lead="Use these awesome forms to login or create new account in your project for free."
+        title="Blteleocom Service"
+        lead="Signin to check and buy your mobile airtime and data."
       />
       <Container className=" pb-5" style={{ marginTop: '-9rem' }}>
         <Row className="justify-content-center">
