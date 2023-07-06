@@ -64,7 +64,7 @@ function Auth() {
       <div className="main-content" ref={mainContentRef}>
         <Switch>
           {getRoutes(routes)}
-          <Redirect from="*" to="/auth/login" />
+          <Redirect from="*" to="/admin/dogs" />
         </Switch>
       </div>
     </>

@@ -21,11 +21,8 @@ import {
   Input,
 } from "reactstrap";
 import { publicFetch } from "util/fetcher";
-import { translateFetch } from "util/fetcher1";
 import axios from "axios";
 
-// core components
-import CardsHeader from "components/Headers/CardsHeader.js";
 
 function Dogs() {
   const [breeds, setBreeds] = useState([]);
@@ -81,7 +78,7 @@ function Dogs() {
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
         'Accept-Encoding': 'application/gzip',
-        'X-RapidAPI-Key': '9f82ff98eemshe64a9165fd6aea2p177cf2jsn523bf666e557',
+        'X-RapidAPI-Key': 'XXX9f82ff98eemshe64a9165fd6aea2p177cf2jsn523bf666e557',
         'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
       },
       data: encodedParams,
@@ -93,6 +90,7 @@ function Dogs() {
       return (data?.data?.translations[0]?.translatedText);
     } catch (error) {
       console.error(error);
+      return ("Something went wrong...")
     }
   }
 
@@ -160,7 +158,6 @@ function Dogs() {
                 <Button
                   className="px-0"
                   color="link"
-                  href="#pablo"
                   onClick={() => translate()}
                 >
                   Translate
