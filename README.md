@@ -1,5 +1,7 @@
 # [Coding Challenge for Aview International]
 
+The live demo is working here **http://159.223.141.22:5000**
+
 #### How to install and run project
 
 npm install
@@ -15,9 +17,12 @@ The file path is **src/views/pages/components/Dog.js**
 
 #### Approach to the challenge
 
-It is build with React.
+It is build with **React**.
 
-It uses the Dog API and Google Translate API.
+It uses the **Dog API** and **Google Translate API**.
 
 It uses **reactstrap** as UI compoent libraries, **axios** to fetch from API.
+
+
+
 
