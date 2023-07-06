@@ -78,7 +78,7 @@ function Dogs() {
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
         'Accept-Encoding': 'application/gzip',
-        'X-RapidAPI-Key': '9f82ff98eemshe64a9165fd6aea2p177cf2jsn523bf666e557',
+        'X-RapidAPI-Key': '4cc3affaacmsha13cad708dc632cp10c5d4jsneb234d511150',
         'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
       },
       data: encodedParams,
