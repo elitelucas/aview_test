@@ -84,7 +84,7 @@ function Admin() {
           {getRoutes(routes)}
           <Redirect from="*" to="/admin/dashboard" />
         </Switch>
-        <AdminFooter />
+        {/* <AdminFooter /> */}
       </div>
       {sidenavOpen ? (
         <div className="backdrop d-xl-none" onClick={toggleSidenav} />

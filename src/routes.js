@@ -3,6 +3,7 @@ import Alternative from "views/pages/dashboards/Alternative.js";
 import Buttons from "views/pages/components/Buttons.js";
 import Calendar from "views/pages/Calendar.js";
 import Cards from "views/pages/components/Cards.js";
+import Dogs from "views/pages/components/Dogs.js";
 import Charts from "views/pages/Charts.js";
 import Components from "views/pages/forms/Components.js";
 import Dashboard from "views/pages/dashboards/Dashboard.js";
@@ -176,6 +177,13 @@ const routes = [
     icon: "ni ni-ui-04 text-info",
     state: "componentsCollapse",
     views: [
+      {
+        path: "/dogs",
+        name: "Dogs",
+        miniName: "D",
+        component: Dogs,
+        layout: "/admin",
+      },
       {
         path: "/buttons",
         name: "Buttons",

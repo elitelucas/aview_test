@@ -57,7 +57,7 @@ function Cards() {
                   Go somewhere
                 </Button>
               </CardBody>
-            </Card>
+            </Card>          
 
             <Card>
               <CardBody>
