@@ -37,6 +37,7 @@ function Dogs() {
   const lang_names = ['Spainish', 'Russian', 'Japanese'];
   const langs = ['es', 'ru', 'ja'];
   const [currentLangIndex, setCurrentLangIndex] = useState(0);
+  const [lastSource, setLastSource] = useState("en");
 
   useEffect(() => {
     (async () => {
@@ -59,18 +60,20 @@ function Dogs() {
   }, [breeds, dogindex]);
 
   const translate = async () => {
-    let new_bred_for = await translateAPI(dogbredfor, langs[currentLangIndex]);
+    let new_bred_for = await translateAPI(dogbredfor, lastSource, langs[currentLangIndex]);
     setDogBredFor(new_bred_for)
 
-    let new_temperament = await translateAPI(dogtemperament, langs[currentLangIndex]);
+    let new_temperament = await translateAPI(dogtemperament, lastSource, langs[currentLangIndex]);
     setDogTemperament(new_temperament)
+
+    setLastSource(langs[currentLangIndex]);
   }
 
-  const translateAPI = async (text, target = "ko") => {
+  const translateAPI = async (text, source = "en", target = "es") => {
     const encodedParams = new URLSearchParams();
     encodedParams.set('q', text);
     encodedParams.set('target', target);
-    encodedParams.set('source', 'en');
+    encodedParams.set('source', source);
 
     const options = {
       method: 'POST',
