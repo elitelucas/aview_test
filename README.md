@@ -25,7 +25,7 @@ It uses **reactstrap** as UI compoent libraries, **axios** to fetch from API.
 
 #### Possible Bugs
 
-It uses free plan for **Google Translate API**.
+It uses free plan for [Text Translator API](https://rapidapi.com/dickyagustin/api/text-translator2).
 
 So if it exceeds rate limit, it might ocuur error. 
 
