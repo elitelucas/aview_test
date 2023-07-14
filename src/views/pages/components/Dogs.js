@@ -34,8 +34,8 @@ function Dogs() {
   const [dogtemperament, setDogTemperament] = useState("");
   const [dogimg, setDogImage] = useState("");
 
-  const lang_names = ['Spainish', 'Russian', 'Japanese'];
-  const langs = ['es', 'ru', 'ja'];
+  const lang_names = ['Spainish', 'Russian', 'Japanese', 'Chinese', 'German', 'Arabic'];
+  const langs = ['es', 'ru', 'ja', 'zh-CN', 'de', 'ar'];
   const [currentLangIndex, setCurrentLangIndex] = useState(0);
   const [lastSource, setLastSource] = useState("en");
 
@@ -71,26 +71,25 @@ function Dogs() {
 
   const translateAPI = async (text, source = "en", target = "es") => {
     const encodedParams = new URLSearchParams();
-    encodedParams.set('q', text);
-    encodedParams.set('target', target);
-    encodedParams.set('source', source);
+    encodedParams.set('source_language', source);
+    encodedParams.set('target_language', target);
+    encodedParams.set('text', text);
 
     const options = {
       method: 'POST',
-      url: 'https://google-translate1.p.rapidapi.com/language/translate/v2',
+      url: 'https://text-translator2.p.rapidapi.com/translate',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'Accept-Encoding': 'application/gzip',
-        'X-RapidAPI-Key': '4cc3affaacmsha13cad708dc632cp10c5d4jsneb234d511150',
-        'X-RapidAPI-Host': 'google-translate1.p.rapidapi.com'
+        'X-RapidAPI-Key': '7a1ce2ebdfmshbe63d26d81b52b4p17117ejsnf0ac5bef37e3',
+        'X-RapidAPI-Host': 'text-translator2.p.rapidapi.com'
       },
       data: encodedParams,
     };
 
     try {
       const { data } = await axios.request(options);
-      console.log(data?.data?.translations[0]?.translatedText);
-      return (data?.data?.translations[0]?.translatedText);
+      console.log(data?.data?.translatedText);
+      return (data?.data?.translatedText);
     } catch (error) {
       console.error(error);
       return ("Something went wrong...")
